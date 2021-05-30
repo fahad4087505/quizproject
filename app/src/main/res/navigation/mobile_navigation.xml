@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/mobileNumberFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -32,4 +32,20 @@
         android:name="com.example.a2by3_android.ui.signup.mobilenumber.MobileNumberFragment"
         android:label="fragment_mobile_number"
         tools:layout="@layout/fragment_mobile_number" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.a2by3_android.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_onboardingSliderFragment"
+            app:destination="@id/onboardingSliderFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/splashFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/onboardingSliderFragment"
+        android:name="com.example.a2by3_android.ui.signup.onboarding.OnboardingSliderFragment"
+        android:label="fragment_onboarding_slider"
+        tools:layout="@layout/fragment_onboarding_slider" />
 </navigation>

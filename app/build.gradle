@@ -90,6 +90,9 @@ dependencies {
     //Firebase Authentication
     implementation 'com.google.firebase:firebase-auth'
 
+    // Circular Indicator
+    implementation 'me.relex:circleindicator:2.1.6'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

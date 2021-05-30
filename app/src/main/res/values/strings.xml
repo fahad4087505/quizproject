@@ -11,6 +11,17 @@
     <string name="signup_with_email">Sign up with Email</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="sign_in">Sign In</string>
+
+    <string name="include_some_details">Include some details</string>
+
+    <string name="onboarding_bg">Onboarding background Image</string>
+    <string name="app_logo">App logo</string>
+
+    <string name="list_your_cards_here">List your cards here!</string>
+    <string name="bid_buy_favorite_cards">Bid and Buy your favorite cards</string>
+    <string name="track_your_card_investments">Track your card investments</string>
+    <string name="see_who_interested_in_cards">See who\'s interested in your cards</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
