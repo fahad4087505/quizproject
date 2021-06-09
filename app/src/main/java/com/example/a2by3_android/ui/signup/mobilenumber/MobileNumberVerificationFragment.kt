@@ -80,10 +80,10 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
   }
 
   private fun sendVerificationCode(number: String) {
-    val firebaseAuthSettings = mAuth?.firebaseAuthSettings
-
-    // Configure faking the auto-retrieval with the whitelisted numbers.
-    firebaseAuthSettings?.setAutoRetrievedSmsCodeForPhoneNumber(number, "123456")
+//    val firebaseAuthSettings = mAuth?.firebaseAuthSettings
+//
+//    // Configure faking the auto-retrieval with the whitelisted numbers.
+//    firebaseAuthSettings?.setAutoRetrievedSmsCodeForPhoneNumber(number, "123456")
 
     // this method is used for getting
     // OTP on user phone number.

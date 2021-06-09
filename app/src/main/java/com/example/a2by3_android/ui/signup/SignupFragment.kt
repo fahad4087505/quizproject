@@ -66,6 +66,8 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
     // Configure sign-in to request the user's ID, email address, and basic
     // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+      // Client Id type 3 from google services.json file
+      .requestIdToken("628095905587-fi9qb5bik5v4ige5n1v3f99iaeu6oete.apps.googleusercontent.com")
       .requestEmail()
       .build()
     val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
@@ -74,8 +76,6 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-
     // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
     if (requestCode == GOOGLE_SIGN_IN_CODE) {
       // The Task returned from this call is always completed, no need to attach
@@ -83,6 +83,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
       val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
       handleSignInResult(task)
     }
+    super.onActivityResult(requestCode, resultCode, data)
   }
 
   private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
@@ -96,7 +97,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
         userData.userEmail = account?.email
         userData.userSignUpMethod = SignUpMethod.GOOGLE
         val userInfo = Gson().toJson(userData)
-        SharedPrefrencesHelper.write(Constant.USER_INFO , userInfo)
+        SharedPrefrencesHelper.write(Constant.USER_INFO, userInfo)
         findNavController().navigate(R.id.action_signupFragment_to_mobileNumberFragment)
       }
     } catch (e: ApiException) {
@@ -121,7 +122,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
           userData.userIdToken = idToken
           userData.userSignUpMethod = SignUpMethod.GOOGLE
           val userInfo = Gson().toJson(userData)
-          SharedPrefrencesHelper.write(Constant.USER_INFO , userInfo)
+          SharedPrefrencesHelper.write(Constant.USER_INFO, userInfo)
           findNavController().navigate(R.id.action_signupFragment_to_mobileNumberFragment)
         } else {
           // If sign in fails, display a message to the user.

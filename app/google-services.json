@@ -37,35 +37,13 @@
             {
               "client_id": "628095905587-fi9qb5bik5v4ige5n1v3f99iaeu6oete.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:628095905587:android:c4a3e8f4cad95c60b4d846",
-        "android_client_info": {
-          "package_name": "com.example.a2by3_android"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "628095905587-fi9qb5bik5v4ige5n1v3f99iaeu6oete.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA2rU2A0qVHbKzS4S7khqkLi5tWYMRNuu4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "628095905587-fi9qb5bik5v4ige5n1v3f99iaeu6oete.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "628095905587-40muu8rs7p9b2plh5oj3gqc1r86cfdqa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sahtech.TwoByThree"
+              }
             }
           ]
         }
