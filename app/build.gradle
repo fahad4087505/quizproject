@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id("androidx.navigation.safeargs")
     id 'dagger.hilt.android.plugin'
 }
 
@@ -12,7 +13,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.a2by3_android"
+        applicationId "com.cards.android"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -82,16 +83,27 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
     //Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation platform('com.google.firebase:firebase-bom:28.1.0')
 
     //Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //Firebase Authentication
-    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-auth-ktx'
 
     // Circular Indicator
     implementation 'me.relex:circleindicator:2.1.6'
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Country and Code Picker
+    //https://github.com/joielechong/CountryCodePicker
+    implementation 'com.github.joielechong:countrycodepicker:2.4.2'
+
+    // OTP View Edit Text
+    //https://github.com/mukeshsolanki/android-otpview-pinview
+    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

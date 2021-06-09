@@ -6,20 +6,33 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.example.a2by3_android.R
 import com.example.a2by3_android.base.BaseFragment
 import com.example.a2by3_android.databinding.FragmentSignupBinding
+import com.example.a2by3_android.enum.SignUpMethod
+import com.example.a2by3_android.helper.SharedPrefrencesHelper
+import com.example.a2by3_android.model.User
 import com.example.a2by3_android.repository.EmptyRepository
+import com.example.a2by3_android.util.Constant
 import com.example.a2by3_android.util.Constant.GOOGLE_SIGN_IN_CODE
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import kotlinx.android.synthetic.main.fragment_signup.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_signup.btnEmailSignUp
+import kotlinx.android.synthetic.main.fragment_signup.btnGoogleSignUp
 
 const val TAG = "SignUpFragment"
 
 class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
+
+  private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
   override fun getFragmentBinding(
     inflater: LayoutInflater,
     container: ViewGroup?
@@ -34,6 +47,10 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
   override fun onPostInit() {
     btnGoogleSignUp.setOnClickListener {
       signIn()
+    }
+
+    btnEmailSignUp.setOnClickListener {
+      findNavController().navigate(R.id.action_signupFragment_to_signupDetailsFragment)
     }
   }
 
@@ -73,11 +90,43 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
       val account = completedTask.getResult(ApiException::class.java)
 
       // Signed in successfully, show authenticated UI.
-      Toast.makeText(requireContext(), account?.email, Toast.LENGTH_SHORT).show()
+      account?.idToken?.let { firebaseAuthWithGoogle(it) } ?: kotlin.run {
+        val userData = User()
+        userData.userUid = account?.id
+        userData.userEmail = account?.email
+        userData.userSignUpMethod = SignUpMethod.GOOGLE
+        val userInfo = Gson().toJson(userData)
+        SharedPrefrencesHelper.write(Constant.USER_INFO , userInfo)
+        findNavController().navigate(R.id.action_signupFragment_to_mobileNumberFragment)
+      }
     } catch (e: ApiException) {
       // The ApiException status code indicates the detailed failure reason.
       // Please refer to the GoogleSignInStatusCodes class reference for more information.
       Log.w(TAG, "signInResult:failed code=" + e.statusCode)
     }
+  }
+
+  private fun firebaseAuthWithGoogle(idToken: String) {
+    val credential = GoogleAuthProvider.getCredential(idToken, null)
+    auth.signInWithCredential(credential)
+      .addOnCompleteListener(requireActivity()) { task ->
+        if (task.isSuccessful) {
+          // Sign in success, update UI with the signed-in user's information
+          Log.d(TAG, "signInWithCredential:success")
+          val user = auth.currentUser
+          Toast.makeText(requireContext(), user?.uid, Toast.LENGTH_SHORT).show()
+          val userData = User()
+          userData.userUid = user?.uid
+          userData.userEmail = user?.email
+          userData.userIdToken = idToken
+          userData.userSignUpMethod = SignUpMethod.GOOGLE
+          val userInfo = Gson().toJson(userData)
+          SharedPrefrencesHelper.write(Constant.USER_INFO , userInfo)
+          findNavController().navigate(R.id.action_signupFragment_to_mobileNumberFragment)
+        } else {
+          // If sign in fails, display a message to the user.
+          Log.w(TAG, "signInWithCredential:failure", task.exception)
+        }
+      }
   }
 }

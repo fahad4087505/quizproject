@@ -16,5 +16,6 @@ object Constant {
   const val SOMETHING_WENT_WRONG = "Something went wrong"
   const val GENERAL_ERROR_CODE = -1
   const val REASON_FAILURE = "Failure"
+  const val USER_INFO = "userInfo"
 
 }
