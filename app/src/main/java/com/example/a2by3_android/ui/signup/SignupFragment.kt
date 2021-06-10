@@ -115,7 +115,6 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
           // Sign in success, update UI with the signed-in user's information
           Log.d(TAG, "signInWithCredential:success")
           val user = auth.currentUser
-          Toast.makeText(requireContext(), user?.uid, Toast.LENGTH_SHORT).show()
           val userData = User()
           userData.userUid = user?.uid
           userData.userEmail = user?.email

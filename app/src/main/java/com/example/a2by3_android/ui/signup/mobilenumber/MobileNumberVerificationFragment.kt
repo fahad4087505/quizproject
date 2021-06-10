@@ -32,9 +32,9 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
 
   private var mAuth: FirebaseAuth? = null
   private var mVerificationId: String =""
-  private var otpCode = ""
   private val args: MobileNumberVerificationFragmentArgs by navArgs()
   private val auth = FirebaseAuth.getInstance()
+  private lateinit var firebaseCallback: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
   override fun getFragmentBinding(
     inflater: LayoutInflater,
@@ -48,7 +48,31 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
   }
 
   override fun onPostInit() {
+
     mAuth = FirebaseAuth.getInstance()
+
+    firebaseCallback =  object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+      override fun onCodeSent(
+        verificationId: String,
+        forceResendingToken: PhoneAuthProvider.ForceResendingToken
+      ) {
+        Log.d(TAG, "onCodeSent: $verificationId ")
+        mVerificationId = verificationId
+        progressBar.visibility = View.GONE
+      }
+
+      override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
+        val code = phoneAuthCredential.smsCode
+        Log.d(TAG, "onVerificationCompleted: $code")
+      }
+
+      override fun onVerificationFailed(e: FirebaseException) {
+        Log.d(TAG, "onVerificationFailed: ${e.message}")
+        Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+      }
+    }
+
 
     val mobileNumber = args.mobileNumber
     sendVerificationCode(mobileNumber)
@@ -58,12 +82,7 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
     }
 
     binding.etOtpCode.setOtpCompletionListener { otp ->
-      if (otpCode != otp) {
-        Toast.makeText(requireContext(), "Wrong Otp Entered", Toast.LENGTH_SHORT).show()
-      } else {
-        updateUserInfoWithUserNumber()
-        findNavController().navigate(R.id.action_mobileNumberVerificationFragment_to_signUpSuccessFragment)
-      }
+      verifyCode(otp)
     }
 
     /*ivBack.setOnClickListener {
@@ -87,39 +106,12 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
 
     // this method is used for getting
     // OTP on user phone number.
+    auth.setLanguageCode("en")
     val options = PhoneAuthOptions.newBuilder(auth)
       .setPhoneNumber(number)
       .setTimeout(60L, TimeUnit.SECONDS)
       .setActivity(requireActivity())
-      .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-        override fun onCodeSent(
-          verificationId: String,
-          forceResendingToken: PhoneAuthProvider.ForceResendingToken
-        ) {
-          Log.d(TAG, "onCodeSent: $verificationId ")
-          mVerificationId = verificationId
-          progressBar.visibility = View.GONE
-        }
-
-        override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-          val code = phoneAuthCredential.smsCode
-          Log.d(TAG, "onVerificationCompleted: $code")
-          if (code != null) {
-            //tvOtpCode.setText(code)
-            otpCode = code
-            Log.d(TAG, "onVerificationCompleted: $otpCode")
-            updateUserInfoWithUserNumber()
-            findNavController().navigate(R.id.action_mobileNumberVerificationFragment_to_signUpSuccessFragment)
-            //verifyCode(code)
-          }
-        }
-
-        override fun onVerificationFailed(e: FirebaseException) {
-          Log.d(TAG, "onVerificationFailed: ${e.message}")
-          Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
-        }
-      })
+      .setCallbacks(firebaseCallback)
       .build()
     PhoneAuthProvider.verifyPhoneNumber(options)
   }
@@ -131,7 +123,7 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
 
     // after getting credential we are
     // calling sign in method.
-    //signInWithPhoneAuthCredential(credential)
+    signInWithPhoneAuthCredential(credential)
   }
 
   private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
@@ -142,13 +134,13 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
           // Sign in success, update UI with the signed-in user's information
           Toast.makeText(requireContext(), "Signed In Successfully", Toast.LENGTH_SHORT).show()
 
-          val user = task.result?.user
+          updateUserInfoWithUserNumber()
         } else {
           // Sign in failed, display a message and update the UI
           Log.d(TAG, "signInWithPhoneAuthCredential Failed: ${task.exception}")
           if (task.exception is FirebaseAuthInvalidCredentialsException) {
             // The verification code entered was invalid
-            Toast.makeText(requireContext(), task.exception.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Invalid Otp Entered", Toast.LENGTH_SHORT).show()
           }
           // Update UI
         }
@@ -173,5 +165,6 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
     user.userSignUpMethod = userInfo.userSignUpMethod
     val userCompleteInfo = Gson().toJson(user)
     SharedPrefrencesHelper.write(Constant.USER_INFO , userCompleteInfo)
+    findNavController().navigate(R.id.action_mobileNumberVerificationFragment_to_signUpSuccessFragment)
   }
 }
