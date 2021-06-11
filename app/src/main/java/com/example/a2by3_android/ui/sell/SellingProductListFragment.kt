@@ -5,6 +5,10 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.a2by3_android.SellingListAdapter
 import com.example.a2by3_android.base.BaseFragment
 import com.example.a2by3_android.databinding.FragmentSellingProductListBinding
 import com.example.a2by3_android.datasource.SellingProductListDataSource
@@ -12,8 +16,8 @@ import com.example.a2by3_android.extensions.hide
 import com.example.a2by3_android.network.Resource
 import com.example.a2by3_android.repository.SellingProductListRepository
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_selling_product_list.*
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.fragment_selling_product_list.progressBar
 
 @AndroidEntryPoint
 class SellingProductListFragment : BaseFragment<FragmentSellingProductListBinding , SellingProductListRepository>() {
@@ -21,6 +25,8 @@ class SellingProductListFragment : BaseFragment<FragmentSellingProductListBindin
   @Inject
   lateinit var dataSource: SellingProductListDataSource
   lateinit var viewModel: SellingProductListViewModel
+  lateinit var categoryArrayList: ArrayList<String>
+
 
   override fun getFragmentBinding(
     inflater: LayoutInflater,
@@ -37,6 +43,7 @@ class SellingProductListFragment : BaseFragment<FragmentSellingProductListBindin
     viewModel = ViewModelProvider(this, factory).get(SellingProductListViewModel::class.java)
     viewModel.fetchSellingtProductsList()
 
+    setAdapter()
     setUpObserver()
   }
 
@@ -47,13 +54,14 @@ class SellingProductListFragment : BaseFragment<FragmentSellingProductListBindin
   }
 
   private fun setUpObserver() {
-    viewModel.sellingProductsList.observe(this , {
+    viewModel.sellingProductsList.observe(this) {
       when(it.status) {
         Resource.Status.SUCCESS -> {
           progressBar.hide()
+          categoryArrayList.addAll(it.data?.data!!)
+          categoriesRecyclerView.adapter?.notifyDataSetChanged()
           Toast.makeText(requireContext(), it.data?.status.toString(), Toast.LENGTH_SHORT).show()
         }
-
         Resource.Status.ERROR -> {
           progressBar.hide()
           Toast.makeText(requireContext(), it.responseError?.errorMessage, Toast.LENGTH_SHORT).show()
@@ -63,7 +71,16 @@ class SellingProductListFragment : BaseFragment<FragmentSellingProductListBindin
 
         }
       }
-    })
+    }
   }
 
+  private fun setAdapter(){
+    // initialize grid layout manager
+    GridLayoutManager(requireActivity(), 2, RecyclerView.VERTICAL, false).apply {
+      // specify the layout manager for recycler view
+    categoriesRecyclerView.layoutManager =this
+    }
+    // finally, data bind the recycler view with adapter
+    categoriesRecyclerView.adapter = SellingListAdapter(categoryArrayList)
+  }
 }

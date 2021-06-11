@@ -7,5 +7,5 @@ data class SellingProductListApiResponse (
   @SerializedName("status")
   val status : Boolean ,
   @SerializedName("data")
-  val data : List<Any>
+  val data : ArrayList<String>
 )
