@@ -60,6 +60,9 @@
             app:destination="@id/onboardingSliderFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_sellingProductListFragment"
+            app:destination="@id/sellingProductListFragment" />
     </fragment>
     <fragment
         android:id="@+id/onboardingSliderFragment"
@@ -106,6 +109,9 @@
         <action
             android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_sellingProductListFragment"
+            app:destination="@id/sellingProductListFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -120,5 +126,11 @@
         android:id="@+id/resetPasswordFragment"
         android:name="com.example.a2by3_android.ui.forgotpassword.ResetPasswordFragment"
         android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password" />
+        tools:layout="@layout/fragment_reset_password" >
+    </fragment>
+    <fragment
+        android:id="@+id/sellingProductListFragment"
+        android:name="com.example.a2by3_android.ui.sell.SellingProductListFragment"
+        android:label="fragment_selling_product_list"
+        tools:layout="@layout/fragment_selling_product_list" />
 </navigation>

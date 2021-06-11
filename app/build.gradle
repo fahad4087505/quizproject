@@ -24,10 +24,10 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "BASE_URL", "\"https://dev-be.medznmore.com/\""
+            buildConfigField "String", "BASE_URL", "\"http://twobythreecards.tk/api/\""
         }
         release {
-            buildConfigField "String", "BASE_URL", "\"https://dev-be.medznmore.com/\""
+            buildConfigField "String", "BASE_URL", "\"http://twobythreecards.tk/api/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

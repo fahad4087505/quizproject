@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.a2by3_android.R
 import com.example.a2by3_android.base.BaseFragment
 import com.example.a2by3_android.databinding.FragmentSignInBinding
+import com.example.a2by3_android.extensions.hide
+import com.example.a2by3_android.extensions.show
 import com.example.a2by3_android.repository.EmptyRepository
 import com.example.a2by3_android.ui.signup.TAG
 import com.example.a2by3_android.util.Constant
@@ -66,7 +68,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, EmptyRepository>() {
 
   private fun userSignIn() {
     if (!TextUtils.isEmpty(etEmail.text.toString()) && !TextUtils.isEmpty(etPassword.text.toString())) {
-      progressBar.visibility = View.VISIBLE
+      progressBar.show()
       mAuth.signInWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
         .addOnCompleteListener { task ->
           if (task.isSuccessful) {
@@ -75,14 +77,15 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, EmptyRepository>() {
               task.result?.user?.uid,
               Toast.LENGTH_LONG
             ).show()
-            progressBar.visibility = View.GONE
+            progressBar.hide()
+            findNavController().navigate(R.id.action_signInFragment_to_sellingProductListFragment)
           } else {
             Toast.makeText(
               requireContext(),
               task.exception?.localizedMessage,
               Toast.LENGTH_LONG
             ).show()
-            progressBar.visibility = View.GONE
+            progressBar.hide()
           }
         }
     }
@@ -92,6 +95,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, EmptyRepository>() {
     // Configure sign-in to request the user's ID, email address, and basic
     // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+      .requestIdToken("628095905587-fi9qb5bik5v4ige5n1v3f99iaeu6oete.apps.googleusercontent.com")
       .requestEmail()
       .build()
     val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
@@ -116,7 +120,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, EmptyRepository>() {
       val account = completedTask.getResult(ApiException::class.java)
 
       // Signed in successfully, show authenticated UI.
-      Toast.makeText(requireContext(), account?.email, Toast.LENGTH_SHORT).show()
+      findNavController().navigate(R.id.action_signInFragment_to_sellingProductListFragment)
 
     } catch (e: ApiException) {
       // The ApiException status code indicates the detailed failure reason.

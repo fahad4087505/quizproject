@@ -2,9 +2,11 @@ package com.example.a2by3_android.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.a2by3_android.repository.SellingProductListRepository
 import com.example.a2by3_android.ui.dashboard.DashboardViewModel
 import com.example.a2by3_android.ui.home.HomeViewModel
 import com.example.a2by3_android.ui.notifications.NotificationsViewModel
+import com.example.a2by3_android.ui.sell.SellingProductListViewModel
 import javax.inject.Inject
 
 /**
@@ -19,6 +21,7 @@ class ViewModelFactory @Inject constructor(private val repository: BaseRepositor
             modelClass.isAssignableFrom(DashboardViewModel::class.java) -> DashboardViewModel(repository) as T
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(repository) as T
             modelClass.isAssignableFrom(NotificationsViewModel::class.java) -> NotificationsViewModel(repository) as T
+            modelClass.isAssignableFrom(SellingProductListViewModel::class.java) -> SellingProductListViewModel(repository as SellingProductListRepository) as T
             else -> throw IllegalAccessException("Unknown View Model.Please add your view model in factory")
         }
     }

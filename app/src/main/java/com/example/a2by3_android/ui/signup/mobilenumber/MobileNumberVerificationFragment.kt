@@ -132,8 +132,6 @@ class MobileNumberVerificationFragment : BaseFragment<FragmentMobileNumberVerifi
         if (task.isSuccessful) {
           Log.d(TAG, "signInWithPhoneAuthCredential: ")
           // Sign in success, update UI with the signed-in user's information
-          Toast.makeText(requireContext(), "Signed In Successfully", Toast.LENGTH_SHORT).show()
-
           updateUserInfoWithUserNumber()
         } else {
           // Sign in failed, display a message and update the UI

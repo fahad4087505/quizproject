@@ -1,7 +1,10 @@
 package com.example.a2by3_android.di
 
 import com.example.a2by3_android.BuildConfig
+import com.example.a2by3_android.apiservice.SellingProductListApiService
+import com.example.a2by3_android.datasource.SellingProductListDataSource
 import com.example.a2by3_android.network.NoInternetInterceptor
+import com.example.a2by3_android.repository.SellingProductListRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -41,4 +44,20 @@ object AppModule {
 
   @Provides
   fun provideGson(): Gson = GsonBuilder().create()
+
+  @Provides
+  fun provideSellingProductsListApiService(retrofit: Retrofit): SellingProductListApiService = retrofit.create(
+    SellingProductListApiService::class.java
+  )
+
+  @Singleton
+  @Provides
+  fun provideSellingProductsListRemoteResponse(sellingProductListApiService: SellingProductListApiService) =
+    SellingProductListDataSource(sellingProductListApiService)
+
+
+  @Singleton
+  @Provides
+  fun provideProductsRepository(sellingProductListDataSource: SellingProductListDataSource) =
+    SellingProductListRepository(sellingProductListDataSource)
 }
