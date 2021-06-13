@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    tools:context=".ui.signup.SignupDetailsFragment">
+
+    <TextView
+        android:id="@+id/tvIncludeSomeDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="@string/include_some_details"
+        android:textColor="#34304B"
+        android:textSize="22sp"
+        android:drawableTint="#34304B"
+        app:drawableStartCompat="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvIncludeSomeDetails">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp">
+            <TextView
+                android:id="@+id/tvWant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You want to"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:checkedButton="@+id/radio_button_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tvWant">
+                <RadioButton
+                    android:id="@+id/radio_button_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:text="Buy it now"/>
+                <RadioButton
+                    android:id="@+id/radio_button_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:text="Auction"/>
+                <RadioButton
+                    android:id="@+id/radio_button_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:text="Both"/>
+            </RadioGroup>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/offersLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:textSize="16sp"
+                    android:id="@+id/acceptSwitch"
+                    android:backgroundTint="@color/black"
+                    android:buttonTint="@color/black"
+
+                    android:theme="@style/SwitchCompatTheme"
+                    android:drawableTint="@color/black"
+                    app:thumbTint="@color/black"
+                    android:textColor="@color/purple"
+                    android:text="Accept Offers"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem ipsum dolor sitLorem ipsum dolor sitLorem ipsum dolor sitLorem ipsum."
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/acceptSwitch" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/minimum_offer_amount_o_and_above"
+                android:textSize="12sp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/offersLayout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etOfferAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvAmount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etOfferAmountText"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:imeOptions="actionNext"
+                    android:background="@drawable/ic_white_rectangle" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvActiveTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auction_active_time"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etOfferAmount" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etActiveTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvActiveTime">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:text="Option"
+                    android:id="@+id/activeTimeTextView"
+                    android:background="@drawable/ic_white_rectangle"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRepeatPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Price"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etActiveTime" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etRepeatPasswordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvRepeatPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRepeatPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:inputType="number"
+                    android:imeOptions="actionNext"
+                    android:background="@drawable/ic_white_rectangle" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Year"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etRepeatPasswordLayout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvYear">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:text="2020"
+                    android:id="@+id/yearTextView"
+                    android:background="@drawable/ic_white_rectangle"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/brand"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etYear" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvBrand">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:text="2020"
+                    android:id="@+id/brandTextView"
+                    android:background="@drawable/ic_white_rectangle"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etBrand" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvProduct">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:text="NBA"
+                    android:id="@+id/productTextView"
+                    android:background="@drawable/ic_white_rectangle"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvAddressLine2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card Number"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etProduct" />
+
+            <EditText
+                android:id="@+id/etAddressLine2"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:background="@drawable/ic_white_rectangle"
+                app:layout_constraintTop_toBottomOf="@id/tvAddressLine2" />
+
+            <TextView
+                android:id="@+id/tvParallel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Parallel"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etAddressLine2" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etParallel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvParallel">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:text="Lorem Ipsum"
+                    android:id="@+id/parallelTextView"
+                    android:background="@drawable/ic_white_rectangle"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tvPlayerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etParallel" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etPlayerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvPlayerName">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:text="Lorem Ipsum"
+                    android:id="@+id/playerTextView"
+                    android:background="@drawable/ic_white_rectangle"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tvGraded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Graded"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etPlayerName" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etGraded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF"
+                app:layout_constraintTop_toBottomOf="@id/tvGraded">
+
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:text="Lorem Ipsum"
+                    android:id="@+id/gradedTextView"
+                    android:background="@drawable/ic_white_rectangle"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tvShippingService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shipping Service"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etGraded" />
+
+            <TextView
+                android:id="@+id/etShippingService"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:maxLines="1"
+                android:clickable="true"
+                android:padding="8dp"
+                android:drawableEnd="@drawable/ic_baseline_chevron_right_24"
+                android:drawableRight="@drawable/ic_baseline_chevron_right_24"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:background="@drawable/ic_white_rectangle"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintTop_toBottomOf="@id/tvShippingService" />
+            <TextView
+                android:id="@+id/tvDescribe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Describe waht are you selling"
+                android:textSize="12sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etShippingService" />
+
+            <EditText
+                android:id="@+id/etDescribe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:maxLines="10"
+                android:minLines="6"
+                android:padding="8dp"
+                android:lines="8"
+                android:gravity="top|left"
+                android:inputType="textMultiLine"
+                android:imeOptions="actionDone"
+                android:background="@drawable/ic_white_rectangle"
+                app:layout_constraintTop_toBottomOf="@id/tvDescribe" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCreateAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingLeft="45dp"
+                android:paddingRight="45dp"
+                android:paddingBottom="5dp"
+                android:textSize="16sp"
+                android:background="@drawable/ic_purple_rectangle"
+                android:textColor="@color/white"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="26dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@id/etDescribe"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,12 @@
 package com.example.a2by3_android.di
 
 import com.example.a2by3_android.BuildConfig
+import com.example.a2by3_android.apiservice.IncludeDetailsApiService
 import com.example.a2by3_android.apiservice.SellingProductListApiService
+import com.example.a2by3_android.datasource.IncludeDetailsDataSource
 import com.example.a2by3_android.datasource.SellingProductListDataSource
 import com.example.a2by3_android.network.NoInternetInterceptor
+import com.example.a2by3_android.repository.IncludeDetailsRepository
 import com.example.a2by3_android.repository.SellingProductListRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -60,4 +63,19 @@ object AppModule {
   @Provides
   fun provideProductsRepository(sellingProductListDataSource: SellingProductListDataSource) =
     SellingProductListRepository(sellingProductListDataSource)
+  @Provides
+  fun provideIncludeDetailsApiService(retrofit: Retrofit): IncludeDetailsApiService = retrofit.create(
+    IncludeDetailsApiService::class.java
+  )
+
+  @Singleton
+  @Provides
+  fun provideIncludeDetailsRemoteResponse(includeDetailsApiService: IncludeDetailsApiService) =
+    IncludeDetailsDataSource(includeDetailsApiService)
+
+
+  @Singleton
+  @Provides
+  fun provideIncludeDetailsRepository(includeDetailsDataSource: IncludeDetailsDataSource) =
+    IncludeDetailsRepository(includeDetailsDataSource)
 }
