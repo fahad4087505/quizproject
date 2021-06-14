@@ -10,6 +10,10 @@ object Constant {
   }
 
   const val GOOGLE_SIGN_IN_CODE = 5
+  const val REQUEST_IMAGE_CAPTURE = 14
+  const val REQUEST_PICK_IMAGE = 12
+  const val CAMERA_PERMISSION_REQUEST_CODE = 72
+  const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1024
   const val AUTH_FAILURE_CODE = 401
   const val AUTH_URL_ERROR = ".medznmore.com/oauth/token"
   const val SESSION_EXPIRED = "Your session has been expired"

@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_splashFragment_to_sellingProductListFragment"
             app:destination="@id/sellingProductListFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_uploadPhotosFragment"
+            app:destination="@id/uploadPhotosFragment" />
     </fragment>
     <fragment
         android:id="@+id/onboardingSliderFragment"
@@ -133,4 +136,9 @@
         android:name="com.example.a2by3_android.ui.sell.SellingProductListFragment"
         android:label="fragment_selling_product_list"
         tools:layout="@layout/fragment_selling_product_list" />
+    <fragment
+        android:id="@+id/uploadPhotosFragment"
+        android:name="com.example.a2by3_android.ui.uploadphotos.UploadPhotosFragment"
+        android:label="fragment_upload_photos"
+        tools:layout="@layout/fragment_upload_photos" />
 </navigation>

@@ -63,6 +63,12 @@
     <string name="create_a_new_passowrd">Create a new password</string>
     <string name="choose_a_strong_passowrd">Choose a strong password</string>
 
+    <string name="upload_your_photos">Upload your Photos</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="upload">Upload</string>
+    <string name="post">Post</string>
+    <string name="cancel">Cancel</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

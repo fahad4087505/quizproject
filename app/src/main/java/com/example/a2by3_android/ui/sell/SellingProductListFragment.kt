@@ -5,7 +5,6 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a2by3_android.SellingListAdapter
@@ -25,7 +24,7 @@ class SellingProductListFragment : BaseFragment<FragmentSellingProductListBindin
   @Inject
   lateinit var dataSource: SellingProductListDataSource
   lateinit var viewModel: SellingProductListViewModel
-  lateinit var categoryArrayList: ArrayList<String>
+  private var categoryArrayList: ArrayList<String> = arrayListOf()
 
 
   override fun getFragmentBinding(
@@ -58,7 +57,7 @@ class SellingProductListFragment : BaseFragment<FragmentSellingProductListBindin
       when(it.status) {
         Resource.Status.SUCCESS -> {
           progressBar.hide()
-          categoryArrayList.addAll(it.data?.data!!)
+          it.data?.data?.let { it1 -> categoryArrayList.addAll(it1) }
           categoriesRecyclerView.adapter?.notifyDataSetChanged()
           Toast.makeText(requireContext(), it.data?.status.toString(), Toast.LENGTH_SHORT).show()
         }
