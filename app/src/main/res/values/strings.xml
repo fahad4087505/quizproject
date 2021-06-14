@@ -71,4 +71,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="minimum_offer_amount_o_and_above">Minimum Offer Amount ( o and above)</string>
+    <string name="auction_active_time">Auction active time</string>
+    <string name="brand">Brand</string>
+    <string name="product">Product</string>
+    <string name="usps_priority_mail_0_00_0_002_5_business_days">USPS Priority Mail</string>
 </resources>

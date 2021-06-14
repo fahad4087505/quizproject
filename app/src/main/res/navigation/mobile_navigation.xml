@@ -135,6 +135,16 @@
         android:id="@+id/sellingProductListFragment"
         android:name="com.example.a2by3_android.ui.sell.SellingProductListFragment"
         android:label="fragment_selling_product_list"
+        tools:layout="@layout/fragment_selling_product_list" >
+        <action
+            android:id="@+id/action_splashFragment_to_includeDetailsFragment"
+            app:destination="@id/includeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/includeDetailsFragment"
+        android:name="com.example.a2by3_android.ui.includedetails.IncludeDetailsFragment"
+        android:label="@string/include_some_details"
+        tools:layout="@layout/fragment_include_details" />
         tools:layout="@layout/fragment_selling_product_list" />
     <fragment
         android:id="@+id/uploadPhotosFragment"
