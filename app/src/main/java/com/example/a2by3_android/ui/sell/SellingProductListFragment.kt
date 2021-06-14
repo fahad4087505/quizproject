@@ -18,10 +18,10 @@ import com.example.a2by3_android.datasource.SellingProductListDataSource
 import com.example.a2by3_android.extensions.hide
 import com.example.a2by3_android.network.Resource
 import com.example.a2by3_android.repository.SellingProductListRepository
-import com.example.a2by3_android.ui.includedetails.IncludeDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_selling_product_list.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_selling_product_list.categoriesRecyclerView
+import kotlinx.android.synthetic.main.fragment_selling_product_list.progressBar
 
 @AndroidEntryPoint
 class SellingProductListFragment : BaseFragment<FragmentSellingProductListBinding , SellingProductListRepository>(),SellingListAdapter.ClickListener {

@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.a2by3_android.R
 import com.example.a2by3_android.base.BaseFragment
@@ -26,6 +25,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_signup.btnEmailSignUp
 import kotlinx.android.synthetic.main.fragment_signup.btnGoogleSignUp
+import kotlinx.android.synthetic.main.fragment_signup.tvSignIn
 
 const val TAG = "SignUpFragment"
 
@@ -48,10 +48,13 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
     btnGoogleSignUp.setOnClickListener {
       signIn()
     }
-
     btnEmailSignUp.setOnClickListener {
       findNavController().navigate(R.id.action_signupFragment_to_signupDetailsFragment)
     }
+    tvSignIn.setOnClickListener {
+      findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+    }
+
   }
 
   override fun onOptionsSelected(item: MenuItem) {

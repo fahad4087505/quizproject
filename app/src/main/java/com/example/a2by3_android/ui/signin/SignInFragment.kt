@@ -5,7 +5,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
@@ -27,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_sign_in.btnGoogleSignIn
 import kotlinx.android.synthetic.main.fragment_sign_in.btnSignIn
 import kotlinx.android.synthetic.main.fragment_sign_in.etEmail
 import kotlinx.android.synthetic.main.fragment_sign_in.etPassword
+import kotlinx.android.synthetic.main.fragment_sign_in.ivBack
 import kotlinx.android.synthetic.main.fragment_sign_in.progressBar
 import kotlinx.android.synthetic.main.fragment_sign_in.tvForgotPassword
 
@@ -57,6 +57,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, EmptyRepository>() {
 
     tvForgotPassword.setOnClickListener {
       findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
+    }
+
+    ivBack.setOnClickListener {
+      findNavController().navigateUp()
     }
   }
 
