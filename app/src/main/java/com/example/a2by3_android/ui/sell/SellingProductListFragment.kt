@@ -18,10 +18,10 @@ import com.example.a2by3_android.datasource.SellingProductListDataSource
 import com.example.a2by3_android.extensions.hide
 import com.example.a2by3_android.network.Resource
 import com.example.a2by3_android.repository.SellingProductListRepository
-import com.example.a2by3_android.ui.includedetails.IncludeDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_selling_product_list.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_selling_product_list.categoriesRecyclerView
+import kotlinx.android.synthetic.main.fragment_selling_product_list.progressBar
 
 @AndroidEntryPoint
 class SellingProductListFragment : BaseFragment<FragmentSellingProductListBinding , SellingProductListRepository>(),SellingListAdapter.ClickListener {
@@ -29,9 +29,12 @@ class SellingProductListFragment : BaseFragment<FragmentSellingProductListBindin
   @Inject
   lateinit var dataSource: SellingProductListDataSource
   lateinit var viewModel: SellingProductListViewModel
-  var categoryArrayList = arrayListOf<String>()
+  private var categoryArrayList: ArrayList<String> = arrayListOf()
+
+
   override fun getFragmentBinding(
-    inflater: LayoutInflater, container: ViewGroup?
+    inflater: LayoutInflater,
+    container: ViewGroup?
   ): FragmentSellingProductListBinding {
     return FragmentSellingProductListBinding.inflate(inflater, container, false)
   }
@@ -65,6 +68,7 @@ class SellingProductListFragment : BaseFragment<FragmentSellingProductListBindin
           categoryArrayList.add("BaseBall")
           categoryArrayList.add("BaseBall")
           categoryArrayList.add("BaseBall")
+          it.data?.data?.let { it1 -> categoryArrayList.addAll(it1) }
           categoriesRecyclerView.adapter?.notifyDataSetChanged()
           Toast.makeText(requireContext(), it.data?.status.toString(), Toast.LENGTH_SHORT).show()
         }

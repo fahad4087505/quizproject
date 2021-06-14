@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_signupFragment_to_mobileNumberFragment"
             app:destination="@id/mobileNumberFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/mobileNumberVerificationFragment"
@@ -62,8 +65,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_sellingProductListFragment"
-            app:destination="@id/sellingProductListFragment" />
-
+            app:destination="@id/sellingProductListFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/onboardingSliderFragment"
@@ -142,5 +146,15 @@
         android:id="@+id/includeDetailsFragment"
         android:name="com.example.a2by3_android.ui.includedetails.IncludeDetailsFragment"
         android:label="@string/include_some_details"
-        tools:layout="@layout/fragment_include_details" />
+        tools:layout="@layout/fragment_include_details">
+        <action
+            android:id="@+id/action_includeDetailsFragment_to_uploadPhotosFragment"
+            app:destination="@id/uploadPhotosFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/uploadPhotosFragment"
+        android:name="com.example.a2by3_android.ui.uploadphotos.UploadPhotosFragment"
+        android:label="fragment_upload_photos"
+        tools:layout="@layout/fragment_upload_photos" />
 </navigation>

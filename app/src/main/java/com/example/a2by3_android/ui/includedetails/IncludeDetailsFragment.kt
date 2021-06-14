@@ -8,6 +8,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.example.a2by3_android.R
 import com.example.a2by3_android.base.BaseFragment
 import com.example.a2by3_android.databinding.FragmentIncludeDetailsBinding
@@ -54,6 +55,9 @@ class IncludeDetailsFragment : BaseFragment<FragmentIncludeDetailsBinding, Inclu
         etShippingService.setOnClickListener {
             val popUpClass = PopUpClass()
             popUpClass.showPopupWindow(it)
+        }
+        btnNext.setOnClickListener {
+            findNavController().navigate(R.id.action_includeDetailsFragment_to_uploadPhotosFragment)
         }
     }
 

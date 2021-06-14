@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.a2by3_android.R
 import com.example.a2by3_android.base.BaseFragment
@@ -33,9 +34,15 @@ class MobileNumberFragment : BaseFragment<FragmentMobileNumberBinding , EmptyRep
 
     binding.btnContinue.setOnClickListener {
       if (!TextUtils.isEmpty(binding.etPhoneNumber.text.toString())) {
-        val phoneNumberEntered = mobileNumberCode + binding.etPhoneNumber.text.toString()
-        val action = MobileNumberFragmentDirections.actionMobileNumberFragmentToMobileNumberVerificationFragment(phoneNumberEntered)
-        findNavController().navigate(action)
+        if (binding.etPhoneNumber.text.toString().length == 10) {
+          val phoneNumberEntered = mobileNumberCode + binding.etPhoneNumber.text.toString()
+          val action = MobileNumberFragmentDirections.actionMobileNumberFragmentToMobileNumberVerificationFragment(phoneNumberEntered)
+          findNavController().navigate(action)
+        } else {
+          Toast.makeText(requireContext(), "Please Enter a Valid Mobile Number", Toast.LENGTH_SHORT).show()
+        }
+      } else {
+        Toast.makeText(requireContext(), "Please Enter Mobile Number", Toast.LENGTH_SHORT).show()
       }
     }
 
