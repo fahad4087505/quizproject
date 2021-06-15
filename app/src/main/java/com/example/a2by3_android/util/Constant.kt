@@ -21,5 +21,5 @@ object Constant {
   const val GENERAL_ERROR_CODE = -1
   const val REASON_FAILURE = "Failure"
   const val USER_INFO = "userInfo"
-
+  const val WEBVIEW_URL = "webViewUrl"
 }

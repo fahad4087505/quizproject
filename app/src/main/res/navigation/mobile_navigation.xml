@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/mobileNumberVerificationFragment"
@@ -157,4 +160,9 @@
         android:name="com.example.a2by3_android.ui.uploadphotos.UploadPhotosFragment"
         android:label="fragment_upload_photos"
         tools:layout="@layout/fragment_upload_photos" />
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.a2by3_android.ui.privacypolicy.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" />
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.a2by3_android.ui.signup
 
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -13,8 +14,10 @@ import com.example.a2by3_android.enum.SignUpMethod
 import com.example.a2by3_android.helper.SharedPrefrencesHelper
 import com.example.a2by3_android.model.User
 import com.example.a2by3_android.repository.EmptyRepository
+import com.example.a2by3_android.ui.privacypolicy.WebViewFragment
 import com.example.a2by3_android.util.Constant
 import com.example.a2by3_android.util.Constant.GOOGLE_SIGN_IN_CODE
+import com.example.a2by3_android.util.Constant.WEBVIEW_URL
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -25,7 +28,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_signup.btnEmailSignUp
 import kotlinx.android.synthetic.main.fragment_signup.btnGoogleSignUp
+import kotlinx.android.synthetic.main.fragment_signup.tvPrivacyPolicy
 import kotlinx.android.synthetic.main.fragment_signup.tvSignIn
+import kotlinx.android.synthetic.main.fragment_signup.tvTerms
 
 const val TAG = "SignUpFragment"
 
@@ -54,7 +59,18 @@ class SignupFragment : BaseFragment<FragmentSignupBinding, EmptyRepository>() {
     tvSignIn.setOnClickListener {
       findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
     }
-
+    tvPrivacyPolicy.setOnClickListener {
+     // WebViewFragment.newInstance("http://twobythreecards.tk/api/page/get-privacy-policy")
+      val bundle = Bundle()
+      bundle.putString(WEBVIEW_URL , "http://twobythreecards.tk/api/page/get-privacy-policy")
+      findNavController().navigate(R.id.action_signUpFragment_to_webViewFragment , bundle)
+    }
+    tvTerms.setOnClickListener {
+     // WebViewFragment.newInstance("http://twobythreecards.tk/api/page/get-terms-condition")
+      val bundle = Bundle()
+      bundle.putString(WEBVIEW_URL , "http://twobythreecards.tk/api/page/get-terms-condition")
+      findNavController().navigate(R.id.action_signUpFragment_to_webViewFragment , bundle)
+    }
   }
 
   override fun onOptionsSelected(item: MenuItem) {
