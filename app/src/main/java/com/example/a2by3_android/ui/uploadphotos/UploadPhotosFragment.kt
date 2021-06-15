@@ -11,13 +11,17 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.example.a2by3_android.base.BaseFragment
 import com.example.a2by3_android.databinding.FragmentUploadPhotosBinding
+import com.example.a2by3_android.extensions.invisible
+import com.example.a2by3_android.extensions.show
 import com.example.a2by3_android.repository.EmptyRepository
 import com.example.a2by3_android.util.Constant.CAMERA_PERMISSION_REQUEST_CODE
 import com.example.a2by3_android.util.Constant.READ_EXTERNAL_STORAGE_REQUEST_CODE
@@ -29,8 +33,13 @@ import java.io.File
 import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto1
 import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto2
 import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto3
+import kotlinx.android.synthetic.main.fragment_upload_photos.ivRemovePhoto1
+import kotlinx.android.synthetic.main.fragment_upload_photos.ivRemovePhoto2
+import kotlinx.android.synthetic.main.fragment_upload_photos.ivRemovePhoto3
 import kotlinx.android.synthetic.main.fragment_upload_photos.lytTakePhoto
 import kotlinx.android.synthetic.main.fragment_upload_photos.lytUploadPhoto
+
+const val TAG = "UploadPhotosFragment"
 
 class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepository>() {
 
@@ -48,17 +57,7 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
   }
 
   override fun onPostInit() {
-    lytTakePhoto.setOnClickListener {
-      if (askForPermissions(Manifest.permission.CAMERA)) {
-        dispatchTakePictureIntent()
-      }
-    }
-
-    lytUploadPhoto.setOnClickListener {
-      if (askForPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-        pickImageFromGallery()
-      }
-    }
+    setUpClickListener()
   }
 
   override fun onOptionsSelected(item: MenuItem) {
@@ -190,14 +189,17 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
     when {
       ivPhoto1.drawable == null -> {
         ivPhoto1.setImageBitmap(bitMap)
+        ivRemovePhoto1.show()
         ivPhoto1.clipToOutline = true
       }
       ivPhoto2.drawable == null -> {
         ivPhoto2.setImageBitmap(bitMap)
+        ivRemovePhoto2.show()
         ivPhoto2.clipToOutline = true
       }
       ivPhoto3.drawable == null -> {
         ivPhoto3.setImageBitmap(bitMap)
+        ivRemovePhoto3.show()
         ivPhoto3.clipToOutline = true
       }
       else -> return
@@ -208,7 +210,63 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
     imageFilesList?.let {
       if (it.size < 3) {
         it.add(imageFile)
+        Log.d(TAG, "addImageFiles: $imageFilesList")
       }
+    }
+  }
+
+  private fun setUpClickListener() {
+    lytTakePhoto.setOnClickListener {
+      if (imageFilesList?.size == 3) {
+        Toast.makeText(requireContext(), "Cannot Upload More Than 3 Photos", Toast.LENGTH_SHORT).show()
+      } else {
+        if (askForPermissions(Manifest.permission.CAMERA)) {
+          dispatchTakePictureIntent()
+        }
+      }
+    }
+
+    lytUploadPhoto.setOnClickListener {
+      if (imageFilesList?.size == 3) {
+        Toast.makeText(requireContext(), "Cannot Upload More Than 3 Photos", Toast.LENGTH_SHORT).show()
+      } else {
+        if (askForPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+          pickImageFromGallery()
+        }
+      }
+    }
+
+    ivRemovePhoto1.setOnClickListener {
+      ivPhoto1.setImageDrawable(null)
+      ivRemovePhoto1.invisible()
+      imageFilesList?.removeFirst()
+      Log.d(TAG, "removeImageFiles: $imageFilesList")
+    }
+
+    ivRemovePhoto2.setOnClickListener {
+      ivPhoto2.setImageDrawable(null)
+      ivRemovePhoto2.invisible()
+      when (imageFilesList?.size) {
+        2 -> {
+          imageFilesList?.removeAt(imageFilesList?.size!! - 1)
+          Log.d(TAG, "removeImageFiles: $imageFilesList")
+        }
+        1 -> {
+          imageFilesList?.removeLast()
+          Log.d(TAG, "removeImageFiles: $imageFilesList")
+        }
+        3 -> {
+          imageFilesList?.removeAt(1)
+          Log.d(TAG, "removeImageFiles: $imageFilesList")
+        }
+      }
+    }
+
+    ivRemovePhoto3.setOnClickListener {
+      ivPhoto3.setImageDrawable(null)
+      ivRemovePhoto3.invisible()
+      imageFilesList?.removeLast()
+      Log.d(TAG, "removeImageFiles: $imageFilesList")
     }
   }
 }
