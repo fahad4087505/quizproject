@@ -121,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="@id/lytUploadPhoto"
         app:layout_constraintTop_toBottomOf="@id/lytUploadPhoto" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lytPhotos"
         android:layout_width="0dp"
         android:layout_height="96dp"
@@ -138,7 +138,18 @@
             android:layout_height="80dp"
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/ic_purple_border" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_purple_light_border" />
+
+        <ImageView
+            android:id="@+id/ivRemovePhoto1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cancel"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/ivPhoto1"
+            app:layout_constraintTop_toTopOf="@id/ivPhoto1" />
 
         <ImageView
             android:id="@+id/ivPhoto2"
@@ -147,7 +158,18 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/ic_purple_border" />
+            app:layout_constraintStart_toEndOf="@id/ivPhoto1"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_purple_light_border" />
+
+        <ImageView
+            android:id="@+id/ivRemovePhoto2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cancel"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/ivPhoto2"
+            app:layout_constraintTop_toTopOf="@id/ivPhoto2" />
 
         <ImageView
             android:id="@+id/ivPhoto3"
@@ -156,9 +178,20 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/ic_purple_border" />
+            app:layout_constraintStart_toEndOf="@id/ivPhoto2"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_purple_light_border" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/ivRemovePhoto3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cancel"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/ivPhoto3"
+            app:layout_constraintTop_toTopOf="@id/ivPhoto3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnPost"
