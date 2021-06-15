@@ -6,7 +6,9 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -23,10 +25,17 @@ import com.example.a2by3_android.util.Constant.REQUEST_IMAGE_CAPTURE
 import com.example.a2by3_android.util.Constant.REQUEST_PICK_IMAGE
 import com.example.a2by3_android.util.imageutil.ImageUtil
 import com.example.a2by3_android.util.imageutil.URIPathHelper
+import java.io.File
+import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto1
+import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto2
+import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto3
 import kotlinx.android.synthetic.main.fragment_upload_photos.lytTakePhoto
 import kotlinx.android.synthetic.main.fragment_upload_photos.lytUploadPhoto
 
 class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepository>() {
+
+  var imageFilesList: ArrayList<File> ?= arrayListOf()
+
   override fun getFragmentBinding(
     inflater: LayoutInflater,
     container: ViewGroup?
@@ -75,13 +84,32 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
       val imageBitmap = data?.extras?.get("data") as Bitmap
+      setImage(imageBitmap)
       val imageUri: Uri? = ImageUtil.getImageUri(requireContext() , imageBitmap)
       val uriPathHelper = URIPathHelper()
       val filePath = imageUri?.let { uriPathHelper.getPath(requireContext(), it) }
+      filePath?.let {
+        val imageFile = File(it)
+        addImageFiles(imageFile)
+      }
     } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
       val imageUri: Uri? = data?.data
       val uriPathHelper = URIPathHelper()
       val filePath = imageUri?.let { uriPathHelper.getPath(requireContext(), it) }
+      filePath?.let {
+        val imageFile = File(it)
+        addImageFiles(imageFile)
+      }
+      val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        imageUri?.let {
+          ImageDecoder.createSource(requireContext().contentResolver,
+            it
+          )
+        }?.let { ImageDecoder.decodeBitmap(it) }
+      } else {
+        MediaStore.Images.Media.getBitmap(requireContext().contentResolver, imageUri)
+      }
+      bitmap?.let { setImage(it) }
     }
   }
 
@@ -156,5 +184,31 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
       }
       .setNegativeButton("Cancel", null)
       .show()
+  }
+
+  private fun setImage(bitMap: Bitmap) {
+    when {
+      ivPhoto1.drawable == null -> {
+        ivPhoto1.setImageBitmap(bitMap)
+        ivPhoto1.clipToOutline = true
+      }
+      ivPhoto2.drawable == null -> {
+        ivPhoto2.setImageBitmap(bitMap)
+        ivPhoto2.clipToOutline = true
+      }
+      ivPhoto3.drawable == null -> {
+        ivPhoto3.setImageBitmap(bitMap)
+        ivPhoto3.clipToOutline = true
+      }
+      else -> return
+    }
+  }
+
+  private fun addImageFiles(imageFile: File) {
+    imageFilesList?.let {
+      if (it.size < 3) {
+        it.add(imageFile)
+      }
+    }
   }
 }
