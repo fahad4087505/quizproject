@@ -7,10 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.example.a2by3_android.R
 import com.example.a2by3_android.base.BaseFragment
+import com.example.a2by3_android.data.sellingproductlistapi.Category
 import com.example.a2by3_android.databinding.FragmentIncludeDetailsBinding
 import com.example.a2by3_android.datasource.IncludeDetailsDataSource
 import com.example.a2by3_android.extensions.hide
@@ -29,7 +29,7 @@ class IncludeDetailsFragment : BaseFragment<FragmentIncludeDetailsBinding, Inclu
     @Inject
     lateinit var dataSource: IncludeDetailsDataSource
     lateinit var viewModel: IncludeDetailViewModel
-    var categoryArrayList = arrayListOf<String>()
+    var categoryArrayList = arrayListOf<Category>()
     override fun getFragmentBinding(
             inflater: LayoutInflater,
             container: ViewGroup?
@@ -73,22 +73,10 @@ class IncludeDetailsFragment : BaseFragment<FragmentIncludeDetailsBinding, Inclu
                 Resource.Status.SUCCESS -> {
                     progressBar.hide()
                     categoryArrayList.addAll(it.data?.data!!)
-                    categoryArrayList.add("BaseBall")
-                    categoryArrayList.add("BaseBall")
-                    categoryArrayList.add("BaseBall")
-                    categoryArrayList.add("BaseBall")
-                    categoryArrayList.add("BaseBall")
                     categoriesRecyclerView.adapter?.notifyDataSetChanged()
-                    Toast.makeText(requireContext(), it.data?.status.toString(), Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.ERROR -> {
                     progressBar.hide()
-                    categoryArrayList.add("BaseBall")
-                    categoryArrayList.add("BaseBall")
-                    categoryArrayList.add("BaseBall")
-                    categoryArrayList.add("BaseBall")
-                    categoryArrayList.add("BaseBall")
-                    categoriesRecyclerView.adapter?.notifyDataSetChanged()
                     Toast.makeText(requireContext(), it.responseError?.errorMessage, Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING -> {

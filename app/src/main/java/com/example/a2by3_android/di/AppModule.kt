@@ -3,13 +3,16 @@ package com.example.a2by3_android.di
 import com.example.a2by3_android.BuildConfig
 import com.example.a2by3_android.apiservice.CreateCardApiService
 import com.example.a2by3_android.apiservice.IncludeDetailsApiService
+import com.example.a2by3_android.apiservice.RegisterUserApiService
 import com.example.a2by3_android.apiservice.SellingProductListApiService
 import com.example.a2by3_android.datasource.CreateCardDataSource
 import com.example.a2by3_android.datasource.IncludeDetailsDataSource
+import com.example.a2by3_android.datasource.RegisterUserDataSource
 import com.example.a2by3_android.datasource.SellingProductListDataSource
 import com.example.a2by3_android.network.NoInternetInterceptor
 import com.example.a2by3_android.repository.CreateCardRepository
 import com.example.a2by3_android.repository.IncludeDetailsRepository
+import com.example.a2by3_android.repository.RegisterUserRepository
 import com.example.a2by3_android.repository.SellingProductListRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -81,6 +84,7 @@ object AppModule {
   @Provides
   fun provideIncludeDetailsRepository(includeDetailsDataSource: IncludeDetailsDataSource) =
     IncludeDetailsRepository(includeDetailsDataSource)
+
   @Provides
   fun createCardApiService(retrofit: Retrofit): CreateCardApiService = retrofit.create(CreateCardApiService::class.java)
 
@@ -94,4 +98,18 @@ object AppModule {
   @Provides
   fun provideCreateCardRepository(createCardDataSource: CreateCardDataSource) =
     CreateCardRepository(createCardDataSource)
+
+  @Provides
+  fun registerUserApiService(retrofit: Retrofit): RegisterUserApiService = retrofit.create(RegisterUserApiService::class.java)
+
+  @Singleton
+  @Provides
+  fun provideRegisterUserResponse(registerUserApiService: RegisterUserApiService) =
+    RegisterUserDataSource(registerUserApiService)
+
+
+  @Singleton
+  @Provides
+  fun provideRegisterUserRepository(registerUserDataSource: RegisterUserDataSource) =
+    RegisterUserRepository(registerUserDataSource)
 }

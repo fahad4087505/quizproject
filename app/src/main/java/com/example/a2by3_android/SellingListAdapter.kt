@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.a2by3_android.data.sellingproductlistapi.Category
 import kotlinx.android.synthetic.main.item_categories.view.*
 
-class SellingListAdapter(private val categories: MutableList<String>,private val click:ClickListener) : RecyclerView.Adapter<SellingListAdapter.ViewHolder>() {
+class SellingListAdapter(private val categories: MutableList<Category>,private val click:ClickListener) : RecyclerView.Adapter<SellingListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflate the custom view from xml layout file
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_categories,parent,false)
@@ -18,7 +19,7 @@ class SellingListAdapter(private val categories: MutableList<String>,private val
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // display the current animal
-        holder.mCategoryTextView.text = categories[position]
+        holder.mCategoryTextView.text = categories[position].title
         holder.relativeLayout.setOnClickListener {
             click.onItemClick(position)
         }
