@@ -18,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.amazonaws.AmazonClientException
 import com.amazonaws.AmazonServiceException
 import com.amazonaws.auth.BasicAWSCredentials
@@ -28,13 +29,16 @@ import com.example.a2by3_android.base.BaseFragment
 import com.example.a2by3_android.databinding.FragmentUploadPhotosBinding
 import com.example.a2by3_android.extensions.invisible
 import com.example.a2by3_android.extensions.show
+import com.example.a2by3_android.model.CreateCard
 import com.example.a2by3_android.repository.EmptyRepository
+import com.example.a2by3_android.ui.home.HomeViewModel
 import com.example.a2by3_android.util.Constant.CAMERA_PERMISSION_REQUEST_CODE
 import com.example.a2by3_android.util.Constant.READ_EXTERNAL_STORAGE_REQUEST_CODE
 import com.example.a2by3_android.util.Constant.REQUEST_IMAGE_CAPTURE
 import com.example.a2by3_android.util.Constant.REQUEST_PICK_IMAGE
 import com.example.a2by3_android.util.imageutil.ImageUtil
 import com.example.a2by3_android.util.imageutil.URIPathHelper
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import kotlinx.android.synthetic.main.fragment_upload_photos.btnPost
 import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto1
@@ -53,16 +57,14 @@ import kotlinx.coroutines.withContext
 
 
 const val TAG = "UploadPhotosFragment"
-
+@AndroidEntryPoint
 class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepository>() {
 
   private var imageFilesList: ArrayList<File>? = arrayListOf()
   private var imageUrlsList: ArrayList<String> = arrayListOf()
+  private val uploadPhotosViewModel: UploadPhotosViewModel by viewModels()
 
-  override fun getFragmentBinding(
-    inflater: LayoutInflater,
-    container: ViewGroup?
-  ): FragmentUploadPhotosBinding {
+  override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentUploadPhotosBinding {
     return FragmentUploadPhotosBinding.inflate(inflater, container, false)
   }
 
@@ -242,6 +244,7 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
 
     btnPost.setOnClickListener {
       val imagesListReturned = uploadImagesTos3()
+      createCardApiCall()
       Log.d(TAG, "Images Returned List: $imagesListReturned")
     }
 
@@ -345,5 +348,20 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
       }
     }
     return imageUrlsList
+  }
+
+  private fun createCardApiCall(){
+    val createCard=CreateCard();
+    createCard.seller_id=1
+    createCard.category_id=1
+    createCard.title="title"
+    createCard.description="title"
+    createCard.listing_type="title"
+    createCard.bid_expiry="title"
+    createCard.fix_price="title"
+    createCard.additional_fields="title"
+    createCard.shipping_method=1
+    createCard.image=imageUrlsList.toString()
+    uploadPhotosViewModel.createCardApiCall(createCard)
   }
 }

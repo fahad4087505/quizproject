@@ -1,8 +1,10 @@
 package com.example.a2by3_android.ui.includedetails
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -30,6 +32,10 @@ class IncludeDetailsFragment : BaseFragment<FragmentIncludeDetailsBinding, Inclu
     lateinit var dataSource: IncludeDetailsDataSource
     lateinit var viewModel: IncludeDetailViewModel
     var categoryArrayList = arrayListOf<Category>()
+    private var selectedYear=""
+    private var gradeTitle=""
+    private var playerName=""
+    private var parallelTitle=""
     override fun getFragmentBinding(
             inflater: LayoutInflater,
             container: ViewGroup?
@@ -90,34 +96,54 @@ class IncludeDetailsFragment : BaseFragment<FragmentIncludeDetailsBinding, Inclu
         val items = listOf("2019", "2018", "2017", "2016")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         (yearTextView as? AutoCompleteTextView)?.setAdapter(adapter)
+        yearTextView.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            selectedYear = parent.selectedItem.toString();
+        })
+//            Toast.makeText(ApplicationProvider.getApplicationContext<Context>(), "Selected Item: " + parent.selectedItem, Toast.LENGTH_SHORT).show() })
     }
 
     private fun setBrandAdapter() {
         val items = listOf("Panini", "Panini1", "Panini2", "Panini3")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         (brandTextView as? AutoCompleteTextView)?.setAdapter(adapter)
+        brandTextView.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            selectedYear = parent.selectedItem.toString();
+        })
     }
 
     private fun setProductAdapter() {
         val items = listOf("NBA", "Product", "BaseBall")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         (productTextView as? AutoCompleteTextView)?.setAdapter(adapter)
+        productTextView.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            selectedYear = parent.selectedItem.toString();
+        })
     }
 
     private fun setParallelAdapter() {
         val items = listOf("Lorem Ipsum", "Lorem Ipsum1", "Lorem Ipsum2")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         (parallelTextView as? AutoCompleteTextView)?.setAdapter(adapter)
+        parallelTextView.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            parallelTitle = parent.selectedItem.toString();
+        })
+
     }
     private fun setPlayerAdapter() {
         val items = listOf("Lorem Ipsum", "Lorem Ipsum1", "Lorem Ipsum2")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         (playerTextView as? AutoCompleteTextView)?.setAdapter(adapter)
+        playerTextView.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            playerName = parent.selectedItem.toString();
+        })
     }
 
     private fun setGradeAdapter() {
         val items = listOf("Lorem Ipsum", "Lorem Ipsum1", "Lorem Ipsum2")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         (gradedTextView as? AutoCompleteTextView)?.setAdapter(adapter)
+        gradedTextView.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            gradeTitle = parent.selectedItem.toString();
+        })
     }
 }
