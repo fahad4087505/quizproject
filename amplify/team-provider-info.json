@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-twobythree-dev-191235-authRole",
+      "UnauthRoleArn": "arn:aws:iam::532837446398:role/amplify-twobythree-dev-191235-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::532837446398:role/amplify-twobythree-dev-191235-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-twobythree-dev-191235-deployment",
+      "UnauthRoleName": "amplify-twobythree-dev-191235-unauthRole",
+      "StackName": "amplify-twobythree-dev-191235",
+      "StackId": "arn:aws:cloudformation:us-east-1:532837446398:stack/amplify-twobythree-dev-191235/ea8f2ac0-ceac-11eb-80b6-1260e6a1f297",
+      "AmplifyAppId": "d1pznoe08qfp2x"
+    }
+  }
+}
