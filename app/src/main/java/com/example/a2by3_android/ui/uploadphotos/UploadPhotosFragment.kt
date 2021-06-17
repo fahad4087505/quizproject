@@ -18,6 +18,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.amazonaws.AmazonClientException
+import com.amazonaws.AmazonServiceException
+import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.services.s3.AmazonS3Client
+import com.amazonaws.services.s3.model.PutObjectRequest
+import com.amplifyframework.core.Amplify
 import com.example.a2by3_android.base.BaseFragment
 import com.example.a2by3_android.databinding.FragmentUploadPhotosBinding
 import com.example.a2by3_android.extensions.invisible
@@ -30,6 +36,7 @@ import com.example.a2by3_android.util.Constant.REQUEST_PICK_IMAGE
 import com.example.a2by3_android.util.imageutil.ImageUtil
 import com.example.a2by3_android.util.imageutil.URIPathHelper
 import java.io.File
+import kotlinx.android.synthetic.main.fragment_upload_photos.btnPost
 import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto1
 import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto2
 import kotlinx.android.synthetic.main.fragment_upload_photos.ivPhoto3
@@ -38,12 +45,19 @@ import kotlinx.android.synthetic.main.fragment_upload_photos.ivRemovePhoto2
 import kotlinx.android.synthetic.main.fragment_upload_photos.ivRemovePhoto3
 import kotlinx.android.synthetic.main.fragment_upload_photos.lytTakePhoto
 import kotlinx.android.synthetic.main.fragment_upload_photos.lytUploadPhoto
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+
 
 const val TAG = "UploadPhotosFragment"
 
 class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepository>() {
 
-  var imageFilesList: ArrayList<File> ?= arrayListOf()
+  private var imageFilesList: ArrayList<File>? = arrayListOf()
+  private var imageUrlsList: ArrayList<String> = arrayListOf()
 
   override fun getFragmentBinding(
     inflater: LayoutInflater,
@@ -84,7 +98,7 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
     if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
       val imageBitmap = data?.extras?.get("data") as Bitmap
       setImage(imageBitmap)
-      val imageUri: Uri? = ImageUtil.getImageUri(requireContext() , imageBitmap)
+      val imageUri: Uri? = ImageUtil.getImageUri(requireContext(), imageBitmap)
       val uriPathHelper = URIPathHelper()
       val filePath = imageUri?.let { uriPathHelper.getPath(requireContext(), it) }
       filePath?.let {
@@ -101,7 +115,8 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
       }
       val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         imageUri?.let {
-          ImageDecoder.createSource(requireContext().contentResolver,
+          ImageDecoder.createSource(
+            requireContext().contentResolver,
             it
           )
         }?.let { ImageDecoder.decodeBitmap(it) }
@@ -128,10 +143,17 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
         showPermissionDeniedDialog()
       } else {
         if (permission == Manifest.permission.READ_EXTERNAL_STORAGE) {
-          requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE) , READ_EXTERNAL_STORAGE_REQUEST_CODE)
+          requestPermissions(
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            READ_EXTERNAL_STORAGE_REQUEST_CODE
+          )
         } else if (permission == Manifest.permission.CAMERA) {
           requestPermissions(
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE , Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
+            arrayOf(
+              Manifest.permission.READ_EXTERNAL_STORAGE,
+              Manifest.permission.WRITE_EXTERNAL_STORAGE,
+              Manifest.permission.CAMERA
+            ),
             CAMERA_PERMISSION_REQUEST_CODE
           )
         }
@@ -149,10 +171,10 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
     when (requestCode) {
       CAMERA_PERMISSION_REQUEST_CODE -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            dispatchTakePictureIntent()
+          dispatchTakePictureIntent()
         } else {
           // permission is denied, you can ask for permission again, if you want
-            askForPermissions(Manifest.permission.CAMERA)
+          askForPermissions(Manifest.permission.CAMERA)
         }
       }
 
@@ -172,7 +194,8 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
     AlertDialog.Builder(requireContext())
       .setTitle("Permission Denied")
       .setMessage("Permission is denied, Please allow permissions from App Settings.")
-      .setPositiveButton("App Settings"
+      .setPositiveButton(
+        "App Settings"
       ) { _, _ ->
         // send to app settings if permission is denied permanently
         val intent = Intent()
@@ -216,9 +239,16 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
   }
 
   private fun setUpClickListener() {
+
+    btnPost.setOnClickListener {
+      val imagesListReturned = uploadImagesTos3()
+      Log.d(TAG, "Images Returned List: $imagesListReturned")
+    }
+
     lytTakePhoto.setOnClickListener {
       if (imageFilesList?.size == 3) {
-        Toast.makeText(requireContext(), "Cannot Upload More Than 3 Photos", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Cannot Upload More Than 3 Photos", Toast.LENGTH_SHORT)
+          .show()
       } else {
         if (askForPermissions(Manifest.permission.CAMERA)) {
           dispatchTakePictureIntent()
@@ -228,7 +258,8 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
 
     lytUploadPhoto.setOnClickListener {
       if (imageFilesList?.size == 3) {
-        Toast.makeText(requireContext(), "Cannot Upload More Than 3 Photos", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Cannot Upload More Than 3 Photos", Toast.LENGTH_SHORT)
+          .show()
       } else {
         if (askForPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)) {
           pickImageFromGallery()
@@ -268,5 +299,51 @@ class UploadPhotosFragment : BaseFragment<FragmentUploadPhotosBinding, EmptyRepo
       imageFilesList?.removeLast()
       Log.d(TAG, "removeImageFiles: $imageFilesList")
     }
+  }
+
+  /** Not using this function, as we not not using Amazon Sdk for Android
+  for Storage
+   */
+  private fun UploadImages() {
+    imageFilesList?.forEach {
+      Amplify.Storage.uploadFile(it.name, it,
+        { Log.i("MyAmplifyApp", "Successfully uploaded: ${it.key}") },
+        { Log.e("MyAmplifyApp", "Upload failed", it) }
+      )
+    }
+  }
+
+  private fun uploadImagesTos3(): ArrayList<String> {
+    val imageUrlsList: ArrayList<String> = arrayListOf()
+
+    val s3Client = AmazonS3Client(
+      BasicAWSCredentials(
+        "AKIAXYD4WGL7PACLSERQ",
+        "7K6WyXMetzZVj8nDml7aaYfsk3TSivvyh7Z+jQDP"
+      )
+    )
+    imageFilesList?.let {
+      if (it.isNotEmpty()) {
+        it.forEach {
+          val por = PutObjectRequest(
+            "twobythreecards",
+            "Images/" + it.name,
+            it
+          )
+
+          runBlocking(Dispatchers.IO) {
+            try {
+              s3Client.putObject(por)
+              imageUrlsList.add("https://s3.us-east-1.amazonaws.com/twobythreecards/Images/" + it.name)
+              Log.d(TAG, "imageUrlsList: $imageUrlsList")
+            } catch (e: AmazonServiceException) {
+              Log.d(TAG, e.errorMessage)
+            } catch (e: AmazonClientException) {
+            }
+          }
+        }
+      }
+    }
+    return imageUrlsList
   }
 }

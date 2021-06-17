@@ -12,7 +12,19 @@ object ImageUtil {
     val bytes = ByteArrayOutputStream()
     inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
     val path =
-      MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Category", null)
+      MediaStore.Images.Media.insertImage(
+        inContext.contentResolver,
+        inImage,
+        getRandomString(),
+        null
+      )
     return Uri.parse(path)
+  }
+
+  private fun getRandomString(): String {
+    val allowedChars = ('A'..'Z') + ('a'..'z')
+    return (1..5)
+      .map { allowedChars.random() }
+      .joinToString("")
   }
 }
