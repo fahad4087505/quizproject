@@ -44,7 +44,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding , EmptyRepository>() {
       override fun onFinish() {
         if (user != null) {
           // User is signed in
-          findNavController().navigate(R.id.action_splashFragment_to_sellingProductListFragment)
+          findNavController().navigate(R.id.action_splashFragment_to_dashboardFragment)
+//          findNavController().navigate(R.id.action_splashFragment_to_sellingProductListFragment)
         } else {
           // No user is signed in
           findNavController().navigate(R.id.action_splashFragment_to_onboardingSliderFragment)

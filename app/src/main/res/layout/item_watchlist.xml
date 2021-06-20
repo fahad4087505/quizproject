@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageView1"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
+            android:padding="20dp"
+            android:src="@drawable/ic_baseball_ball"
+            app:riv_border_color="#333333"
+            app:riv_corner_radius_bottom_right="10dp"
+            app:riv_corner_radius_top_right="10dp"
+            app:riv_corner_radius_bottom_left="10dp"
+            app:riv_corner_radius_top_left="10dp"
+            app:riv_mutate_background="true"
+            app:riv_oval="false" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:text="Product Name"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:text="00.00$"
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/PrimaryButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/round_corenr_button"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Buy Now"
+        app:backgroundTint="@null" />
+</LinearLayout>

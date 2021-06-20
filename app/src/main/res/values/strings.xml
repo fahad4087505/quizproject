@@ -38,6 +38,7 @@
     <string name="postcode">Postcode</string>
     <string name="create_an_account">Create an account</string>
     <string name="incomplete_infomation">Incomplete Information</string>
+    <string name="two_by_three_shop">Two by Three Shop</string>
 
     <string name="verify_your_mobile">Verify your mobile</string>
     <string name="text_on_mobile">We will send a text to verify your mobile. No fees will apply</string>
