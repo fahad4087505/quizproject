@@ -1,6 +1,7 @@
 package com.example.triviaquizapp.ui.splash
 
 import android.os.CountDownTimer
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -30,14 +31,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, EmptyRepository>() {
     }
 
     private fun goToNextScreen() {
-        object : CountDownTimer(4000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
+        Handler().postDelayed({
+            findNavController().navigate(R.id.action_splashFragment_to_quizModeFragment)
 
-            }
+        }, 3000)
 
-            override fun onFinish() {
-                findNavController().navigate(R.id.action_splashFragment_to_quizModeFragment)
-            }
-        }.start()
     }
 }
