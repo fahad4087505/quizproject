@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">Quiz App</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="app_icon">App Icon</string>
+    <string name="two_by_three_cards">Two by Three Cards</string>
+    <string name="start_by_creating_an_account">Start by creating an account</string>
+    <string name="continue_with_gmail">Continue with Gmail</string>
+    <string name="signup_with_email">Sign up with Email</string>
+    <string name="by_signing_up_you_agree">By signing up you agree to our</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="and">and</string>
+    <string name="terms">Terms</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="question">Question</string>
+    <string name="play_again">Play again</string>
+    <string name="time">5</string>
+    <string name="correct">Correct</string>
+    <string name="wrongans">Opps the ans was wrong</string>
+    <string name="timeup">Time Up</string>
+    <string name="play_game">Play Game</string>
+    <string name="quit">Quit</string>
+    <string name="cancel">✖</string>
+    <string name="include_some_details">Include some details</string>
+
+    <string name="onboarding_bg">Onboarding background Image</string>
+    <string name="app_logo">App logo</string>
+
+    <string name="list_your_cards_here">List your cards here!</string>
+    <string name="bid_buy_favorite_cards">Bid and Buy your favorite cards</string>
+    <string name="track_your_card_investments">Track your card investments</string>
+    <string name="see_who_interested_in_cards">See who\'s interested in your cards</string>
+    <string name="next">Next</string>
+
+    <string name="your_email">Your Email</string>
+    <string name="create_a_strong_password">Create a strong password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="postcode">Postcode</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="incomplete_infomation">Incomplete Information</string>
+
+    <string name="verify_your_mobile">Verify your mobile</string>
+    <string name="text_on_mobile">We will send a text to verify your mobile. No fees will apply</string>
+    <string name="enter_your_number">Enter your number</string>
+
+    <string name="enter_verification_code">Enter verification code</string>
+    <string name="verification_code_via_sms">We sent you a verification code via SMS</string>
+    <string name="didnt_receive_it">Didn\'t receive it?</string>
+    <string name="click_here">Click here</string>
+
+    <string name="success">Success!</string>
+
+    <string name="sign_in_to_your_account">Sign in to your account</string>
+    <string name="your_password">Your Password</string>
+    <string name="forgot_your_passowrd">Forgot your passowrd?</string>
+    <string name="or">Or</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+
+    <string name="forgot_password">Forgot password?</string>
+    <string name="enter_your_email_below">Enter your email below and we will send you a reset email</string>
+    <string name="continue_next">Continue</string>
+
+    <string name="create_a_new_passowrd">Create a new password</string>
+    <string name="choose_a_strong_passowrd">Choose a strong password</string>
+
+    <string name="upload_your_photos">Upload your Photos</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="upload">Upload</string>
+    <string name="post">Post</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="minimum_offer_amount_o_and_above">Minimum Offer Amount ( o and above)</string>
+    <string name="auction_active_time">Auction active time</string>
+    <string name="brand">Brand</string>
+    <string name="product">Product</string>
+</resources>
